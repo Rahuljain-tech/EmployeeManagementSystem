@@ -1,0 +1,57 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/register/register.css'%}">
+    <title>Register</title>
+</head>
+<body>
+    {% include 'home.html' %}
+    
+    {% include 'nav.html' %}
+
+
+
+<section class="register">
+    <div class="row justify-content-center">
+        <div class="col-sm-6">
+            <h2 class="text-muted">Register</h2>
+            <form method="POST" action="">
+                {% csrf_token %}
+                
+               
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+    
+                <div class="mb-3">
+                    <label for="exampleInputusername" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="exampleInputusername" name = "username" aria-describedby="emailHelp">
+                    </div>
+                <div class="mb-3">
+                    <label for="exampleInputemail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="exampleInputemail" name="email" aria-describedby="emailHelp">
+                    </div>
+                 
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name = "password">
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary">Register</button>
+                  <a href="{% url 'login'%}">Login Here</a>
+                
+    
+            </form>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

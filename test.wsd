@@ -1,0 +1,23 @@
+"@startuml Login Process"
+
+actor "user" as user 
+
+
+participant "Login page" as login
+participant "Django server" as server
+participant "browser" as session
+database "db" as db
+
+
+
+user->login:enter details
+activate login
+login->server:request for login
+activate server
+server->session:request for session_id
+activate session
+session->db:verifies session_id from django_sessions
+activate db
+db-->server:receives verfication
+server-->login:authenticates user
+login-->user:redirects to homepage

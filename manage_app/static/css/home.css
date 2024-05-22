@@ -1,0 +1,30 @@
+.head h1{
+    background-color: #a9a2be;
+}
+body{
+    background: grey;color: black;
+}
+.header{
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    background-color: red;
+    
+}
+.heading{
+     padding: 2% 0 0 0;
+    
+}
+
+.header .logo img{
+    border: 1px solid #ddd;
+    border-radius: 5%;
+    padding: 5px;
+    width: 150px;
+    height: auto;
+}
+
+.header .logo img:hover{
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
