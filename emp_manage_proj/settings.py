@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-_y()#9t$)z_24hcod9_ivr@0-cjxk1@@(9do%ll$-1l-1zwpgy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+     "whitenoise.runserver_nostatic"
     'django.contrib.staticfiles',
     'manage_app',
 ]
@@ -135,4 +136,4 @@ STATICFILES_DIRS = ["F:/rj/Projects/python projects/django/EMS/emp_manage_proj/e
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage' 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' 
