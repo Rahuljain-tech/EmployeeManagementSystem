@@ -1,0 +1,15 @@
+
+
+{
+    "builds": [{
+        "src": "emp_manage_proj/wsgi.py",
+        "use": "@ardnt/vercel-python-wsgi",
+        "config": { "maxLambdaSize": "15mb" }
+    }],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "emp_manage_proj/wsgi.py"
+        }
+    ]
+}
