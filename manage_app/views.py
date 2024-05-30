@@ -2,7 +2,7 @@
 from django.shortcuts import render , HttpResponse , redirect
 from .models import Employee , Department
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
+
 
 from .middlewares import auth , guest
 from .forms import CreateUserForm, LoginForm
