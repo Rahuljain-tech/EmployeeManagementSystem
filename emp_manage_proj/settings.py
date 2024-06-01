@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-_y()#9t$)z_24hcod9_ivr@0-cjxk1@@(9do%ll$-1l-1zwpgy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = ['.vercel.app','employeemanagementsystem-navi.onrender.com']
 
 
 # Application definition
