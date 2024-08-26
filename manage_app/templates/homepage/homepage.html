@@ -1,38 +1,14 @@
+
+
+{%extends "base.html" %}
 {%load static%}
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EMS</title>
-    <link rel="stylesheet" href="{% static 'css/homepage/homepage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
-<body>
-    
-        {% include 'home.html' %}
-    
-    
-    
-    <section class="content">
 
-        {% include 'nav.html' %}
-
-
-        {% if not request.user.is_authenticated %}
-    {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <p{% if message.tags %} class="alert alert-danger"{% endif %}>{{ message }}</p>
-                {% endfor %}
-            </ul>
-            {% endif %}
-    {% endif %}
-    </section>
-    <section>
-        {%if request.user.is_authenticated %}
+{%block container %}
+{%if request.user.is_authenticated %}
         <h1>Welcome {{request.user}} !!</h1>
         {% endif %}
-    </section>
-    
-</body>
-</html>
+ {%endblock%}       

@@ -1,80 +1,201 @@
-<!DOCTYPE html>
 
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Create Employee</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href=""><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
-    <body>
-     {% include 'home.html' %}
-     {% include 'nav.html' %}
-       
-        <div class="container">
-           <section>
-            <h1>Add an Employee</h1>
-            <hr>
-            
+{% extends 'base.html'%}
+{%load static %}
 
-            <form action="/create_emp" method="post">
+{%block container%}
+<section>
+  <h1>Add an Employee</h1>
+  <hr>
+  
 
-                {%csrf_token %}
-                
+  <form action="/create_emp" method="post" id="create_emp_form">
 
-                {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                    <li{% if message.tags %} class="alert alert-{{message.tags}}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+      {%csrf_token %}
+      
+
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="alert alert-{{message.tags}}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
 
 
-                <label for="first_name">First Name</label><br>
-                    <input type="text" id="first_name" name="first_name" value="{{ first_name }}" required><br>
-                    <label for="last_name">Last Name</label><br>
-                    <input type="text" id="last_name" name="last_name" value="{{ last_name }}"><br>
-                    <label for="salary">Salary</label><br>
-                    <input type="number" id="salary" name="salary" value="{{ salary }}"><br>
-                    <!-- Used to display department id
-                      <label for="dept_id">Department Id</label><br>
-                    <input type="number" id="dept_id" name="dept_id" value="{{ dept_id }}"><br> -->
-                    <label for="dept">Department</label><br>
-                    <input type="text" id="dept" name="dept" value="{{ dept }}"><br>
-               
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-           </section>
-           <section>
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Department Id</th>
-                    <th scope="col">Department</th>
-                   
-                    
-                  </tr>
-                </thead>
-                {% for dept in depts %}
-                <tbody>
-                  <tr>
-                    <th scope="row">{{forloop.counter}}</th>
-                    <td>{{dept.name}}</td>
-                    
-                    
-                  </tr>
-                  
-                </tbody>
-                {% endfor %}
-              </table>
-           </section>
-        </div>
-        <script src="" async defer></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+          <label for="first_name">First Name</label><br>
+          <input type="text" id="first_name" onchange="validatefirst_name()" name="first_name" value="{{ first_name }}" required><br>
+          <span id="first_name-error" class="text-danger"></span><br>
+          <label for="last_name">Last Name</label><br>
+          <input type="text" id="last_name" onchange = "validatelast_name()" name="last_name" value="{{ last_name }}"><br>
+          <span id="last_name-error" class="text-danger"></span><br>
+          <label for="salary"   >Salary</label><br>
+          <input type="number" id="salary" onchange="validateSalary()" name="salary" value="{{ salary }}"><br>
+          <span id="salary-error" class="text-danger"></span><br>
+          <!-- Used to display department id
+            <label for="dept_id">Department Id</label><br>
+          <input type="number" id="dept_id" name="dept_id" value="{{ dept_id }}"><br> -->
+          <label for="dept">Department</label><br>
+          <select id="dept" name="dept"  >
+            <option id="dept" name="dept" value="" selected disabled>Select Department</option>
+            {% for dept in depts %}
+            <option id="dept_name" name="{{dept}}" value="{{dept.pk}}" onselect="department()">{{dept.name}}</option>
+            {% endfor %}
+             
+          </select>
+          <!-- <input type="text" id="dept" name="dept" value="{{ dept}}" placeholder="Enter Dept Id"><br> -->
+     
+      <button type="submit" class="btn btn-primary" id="submitButton" >Submit</button>
+    </form>
+ </section>
+ <!-- <section>
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Department Id</th>
+          <th scope="col">Department</th>
+         
+          
+        </tr>
+      </thead>
+      {% for dept in depts %}
+      <tbody>
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{dept.name}}</td>
+          
+          
+        </tr>
+        
+      </tbody>
+      {% endfor %}
+    </table>
+ </section> -->
+ {%endblock%}
+ {%block script%}
+ <script>
+  function department(){
+    dept = document.getElementById
+  }
+  const form = document.getElementById('create_emp_form');
+  const submitButton = document.getElementById('submitButton');
+
+  // Attach input event listeners for continuous validation
+  document.getElementById('first_name').addEventListener('input', validateForm);
+  document.getElementById('last_name').addEventListener('input', validateForm);
+  document.getElementById('salary').addEventListener('input', validateForm);
+
+  form.onsubmit = function(event) {
+    return submitbtn(event); // Use return to properly handle form submission
+  };
+
+  function validateForm() {
+    let isValid = true;
+
+    if (!validatefirst_name()) {
+      isValid = false;
+    }
+    if (!validatelast_name()) {
+      isValid = false;
+    }
+    if (!validateSalary()) {
+      isValid = false;
+    }
+
+    submitButton.disabled = !isValid; // Disable button based on validation
+
+    return isValid;
+  }
+
+  function submitbtn(event) {
+    const isValid = validateForm();
+    if (!isValid) {
+      event.preventDefault(); // Prevent form submission if not valid
+    }
+    return isValid;
+  }
+
+  function validatefirst_name() {
+    const first_name = document.getElementById('first_name').value.trim();
+    const first_nameError = document.getElementById('first_name-error');
+
+    first_nameError.textContent = '';
+
+    let isValid = true;
+    const regex = /^[a-zA-Z '-]+$/;
+
+    if (first_name === "") {
+      first_nameError.textContent = `Please enter a name.`;
+      isValid = false;
+    } else if (first_name.length > 10) {
+      first_nameError.textContent = `First name must be less than 10 characters.`;
+      isValid = false;
+    } else if (!regex.test(first_name)) {
+      first_nameError.textContent = `First Name can only contain letters, spaces, hyphens, and apostrophes.`;
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  function validatelast_name() {
+    const last_name = document.getElementById('last_name').value.trim();
+    const last_nameError = document.getElementById('last_name-error');
+
+    last_nameError.textContent = '';
+
+    let isValid = true;
+    const regex = /^[a-zA-Z '-]+$/;
+
+    if (last_name === "") {
+      last_nameError.textContent = `Please enter a name.`;
+      isValid = false;
+    } else if (last_name.length > 10) {
+      last_nameError.textContent = `Last name must be less than 10 characters.`;
+      isValid = false;
+    } else if (!regex.test(last_name)) {
+      last_nameError.textContent = `Last Name can only contain letters, spaces, hyphens, and apostrophes.`;
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  function validateSalary() {
+    const salary = document.getElementById('salary').value.trim();
+    const salaryError = document.getElementById('salary-error');
+
+    salaryError.textContent = '';
+
+    let isValid = true;
+
+    if (isNaN(salary) || salary === "") {
+      salaryError.textContent = `Please enter a valid number for salary.`;
+      isValid = false;
+    } else {
+      const salaryValue = parseFloat(salary);
+      const minSalary = 10000;
+      const maxSalary = 500000;
+
+      if (salaryValue < minSalary) {
+        salaryError.textContent = `Minimum salary is ${minSalary}. Please enter a higher value.`;
+        isValid = false;
+      } else if (salaryValue > maxSalary) {
+        salaryError.textContent = `Maximum salary is ${maxSalary}. Please enter a lower value.`;
+        isValid = false;
+      }
+    }
+
+    return isValid;
+  }
+</script>
+
+ {%endblock%}
+ <!-- <html>
+  <head>
+    <title>Create Employee</title>
+  </head>
+  <body>
+    
+  </body>
    
-    </body>
-</html>
+ </html> -->
